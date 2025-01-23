@@ -1,0 +1,21 @@
+{
+  "name": "routing-rendering",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@lucia-auth/adapter-sqlite": "^3.0.2",
+    "better-sqlite3": "^11.6.0",
+    "cloudinary": "^2.5.1",
+    "lucia": "^3.2.2",
+    "next": "^15.1.6",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.54.2"
+  }
+}
