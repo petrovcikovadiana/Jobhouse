@@ -9,7 +9,6 @@ export default function PostForm({ action }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    console.log("FormData keys:", Array.from(formData.keys())); // Zobrazí klíče formulářových dat
 
     // Zavolání serverové akce a zpracování výsledku
     const result = await action(formData);
@@ -28,6 +27,22 @@ export default function PostForm({ action }) {
           <input type="text" id="title" name="title" />
         </p>
         <p className="form-control">
+          <label htmlFor="company">Company name</label>
+          <input type="text" id="company" name="company" />
+        </p>
+        <p className="form-control">
+          <label htmlFor="location">Location</label>
+          <input type="text" id="location" name="location" />
+        </p>
+        <p className="form-control">
+          <label htmlFor="salary">Salary</label>
+          <input type="text" id="salary" name="salary" />
+        </p>
+        <p className="form-control">
+          <label htmlFor="jobContract">Job contract</label>
+          <input type="text" id="jobContract" name="jobContract" />
+        </p>
+        <p className="form-control">
           <label htmlFor="image">Image </label>
           <input
             type="file"
@@ -40,9 +55,9 @@ export default function PostForm({ action }) {
           <label htmlFor="content">Content</label>
           <textarea id="content" name="content" rows="5" />
         </p>
-        <p className="form-actions">
+        <div className="form-actions">
           <FormSubmit />
-        </p>
+        </div>
 
         {/* Zobrazení chyb */}
         {errors.length > 0 && (

@@ -36,7 +36,7 @@ export async function signup(prevState, formData) {
     // after create user, calling createAuthSession, which make login
     await createAuthSession(id);
     // after succesfull login, redirect
-    redirect("/training");
+    redirect("/");
   } catch (error) {
     // if email existing, error
     if (error.code === "SQLITE_CONSTRAINT_UNIQUE") {
@@ -75,7 +75,7 @@ export async function login(prevState, formData) {
   // after create user, calling createAuthSession, which make login
 
   await createAuthSession(existingUser.id);
-  redirect("/training");
+  redirect("/");
 }
 
 export async function auth(mode, prevState, formData) {
@@ -83,9 +83,4 @@ export async function auth(mode, prevState, formData) {
     return login(prevState, formData);
   }
   return signup(prevState, formData);
-}
-
-export async function logout() {
-  await destroySession();
-  redirect("/");
 }
