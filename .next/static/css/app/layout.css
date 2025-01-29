@@ -13,7 +13,7 @@ html {
 
 body {
   margin: 0;
-  background: linear-gradient(rgb(235, 230, 232));
+  background: #ffffff;
   color: rgb(53, 53, 51);
   min-height: 100vh;
 }
@@ -30,34 +30,26 @@ ul {
 }
 
 main {
-  width: 80%;
-  max-width: 60rem;
-  margin: 3rem auto;
+  width: 100%;
+  max-width: none;
   padding: 2rem;
   border-radius: 6px;
-  background: linear-gradient(#ffffff, #f7d6d4, #dfb1c5);
+  background: rgb(216, 213, 220);
   min-height: 85vh;
   box-shadow: 0 0 6px rgba(19, 19, 19, 0.5);
 }
 
-#page {
-  width: 90%;
-  max-width: 60rem;
-  margin: 2rem auto;
-}
-
 #main-header {
-  width: 80%;
-  max-width: 60rem;
-  margin: 2rem auto;
+  width: 90%;
+  max-width: 80rem;
+  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 #main-header img {
-  width: 8rem;
-  height: 8rem;
+  width: 6rem;
 }
 
 #main-header ul {
@@ -66,15 +58,15 @@ main {
 }
 
 #main-header ul a {
-  color: #eee7ea;
+  color: rgb(55, 53, 54);
   text-decoration: none;
   padding: 0.5rem 1rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
   border-radius: 4px;
 }
 
 #main-header ul a:hover {
-  background-color: #5f5a5c;
+  background-color: rgb(177, 165, 170);
 }
 
 #main-header ul .cta-link {
@@ -334,11 +326,6 @@ main {
   background-color: #5f2a8a;
 }
 
-main {
-  max-width: 50rem;
-  margin: 2rem auto;
-}
-
 #training-sessions {
   max-width: 40rem;
   margin: 2rem auto;
@@ -379,10 +366,6 @@ main {
 #training-sessions li p {
   margin: 1rem;
   color: #7c7a80;
-}
-
-#latest-posts {
-  margin-top: 2rem;
 }
 
 .form-control label,
@@ -459,16 +442,15 @@ main {
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  border-radius: 6px;
-  border: 1px solid #443f41;
-  background: linear-gradient(#ffffff, #f7d6d4, #dfb1c5);
+  border-radius: 15px;
+  background: #ffffff;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 .post img {
   width: 8rem;
   height: 6rem;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .post-content {
@@ -481,15 +463,90 @@ main {
 }
 
 .post header {
-  margin-bottom: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
 
-.post header p {
+.post .skills {
   font-size: 0.9rem;
-  color: #b1a9ac;
+  color: #ffffff;
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+}
+
+.post .skills p {
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.post .skills p:nth-child(1) {
+  background-color: rgb(193, 127, 204); /* Zelená pro první prvek (Salary) */
+}
+
+.post .skills p:nth-child(2) {
+  background-color: rgb(
+    127,
+    185,
+    214
+  ); /* Modrá pro druhý prvek (Job Contract) */
+}
+
+.post .skills p:nth-child(3) {
+  background-color: #ff9800; /* Oranžová */
+}
+
+.post .skills p:nth-child(4) {
+  background-color: #e91e63; /* Růžová */
+}
+
+.post .skills p:nth-child(5) {
+  background-color: #9c27b0; /* Fialová */
+}
+
+/* Opakování barev, pokud je více než 5 */
+.post .skills p:nth-child(n + 6) {
+  background-color: #607d8b; /* Šedá pro zbytek */
+}
+
+.post-company {
+  color: blue;
+}
+
+.detail-container {
+  display: flex;
+  flex-direction: rows;
+}
+
+.detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-header h1 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.detail-header p {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.detail-img {
+  width: 8rem;
+  height: 6rem;
+  object-fit: contain;
 }
 
 .like-button {
@@ -511,5 +568,26 @@ main {
 
 .liked .like-button:hover svg {
   fill: transparent;
+}
+
+.home-layout {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.home-layout .filters {
+  flex: 1 1;
+  max-width: 30%;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.home-layout .posts {
+  flex: 2 1;
+  max-width: 100%;
 }
 

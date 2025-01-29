@@ -13,10 +13,7 @@ export default function AuthLayout({ children }) {
       <body id="page">
         {" "}
         <header id="auth-header">
-          <p>welcome back!</p>
-          <form action={logout}>
-            <button>Logout</button>
-          </form>{" "}
+          <p>Prihlaste se</p>
         </header>
         {children}
       </body>

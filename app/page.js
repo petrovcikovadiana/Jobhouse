@@ -1,24 +1,66 @@
-import { Suspense } from "react";
+"use client";
 
+import { useEffect, useState } from "react";
 import Posts from "@/components/posts";
-import { getPosts } from "@/lib/posts";
-import Header from "@/components/header";
+import Filter from "@/components/filter";
 
-async function LatestPosts() {
-  const latestPosts = await getPosts(2);
-  return <Posts posts={latestPosts} />;
-}
+export default function Home() {
+  const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
 
-export default async function Home() {
+  useEffect(() => {
+    const fetchAllPosts = async () => {
+      const response = await fetch("/api/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setPosts(data);
+        setFilteredPosts(data);
+      }
+    };
+
+    fetchAllPosts();
+  }, []);
+
+  const fetchFilteredPosts = async (filters) => {
+    const response = await fetch("/api/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(filters),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      setFilteredPosts(data);
+    }
+  };
+
   return (
     <>
-      <h1>Welcome back!</h1>
-      <p>Here's what you might've missed.</p>
-      <section id="latest-posts">
-        <Suspense fallback={<p>Loading recent posts...</p>}>
-          <LatestPosts />
-        </Suspense>
-      </section>
+      <div className="home-layout">
+        {" "}
+        {/* Komponenta pro filtrování */}
+        <div className="filters">
+          {" "}
+          <Filter onApply={fetchFilteredPosts} />
+        </div>
+        <div className="posts">
+          {/* Zobrazení příspěvků */}
+          {filteredPosts.length > 0 ? (
+            <Posts posts={filteredPosts} />
+          ) : (
+            <p>No posts found for the selected filters.</p>
+          )}
+        </div>
+      </div>
     </>
   );
 }

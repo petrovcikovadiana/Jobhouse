@@ -1,5 +1,6 @@
 {
-  "/feed/page": "app/feed/page.js",
   "/page": "app/page.js",
+  "/feed/[slug]/page": "app/feed/[slug]/page.js",
+  "/feed/page": "app/feed/page.js",
   "/new-post/page": "app/new-post/page.js"
 }
