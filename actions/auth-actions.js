@@ -11,6 +11,7 @@ export async function signup(prevState, formData) {
   // get data from form
   const email = formData.get("email");
   const password = formData.get("password");
+  const role = formData.get("role"); // GET ROLE FROM FORM
 
   // validate email and password
 
@@ -22,6 +23,9 @@ export async function signup(prevState, formData) {
   if (password.trim().length < 8) {
     errors.password = "Password must be at least 8 characters long.";
   }
+  if (!["employer", "job_seeker"].includes(role)) {
+    errors.role = "Invalid role selected.";
+  }
   // if something missing from 2 checks above, error
   if (Object.keys(errors).length > 0) {
     return {
@@ -32,7 +36,7 @@ export async function signup(prevState, formData) {
   const hashedPassword = hashUserPassword(password);
   try {
     // save user to database
-    const id = createUser(email, hashedPassword);
+    const id = await createUser(email, hashedPassword, role);
     // after create user, calling createAuthSession, which make login
     await createAuthSession(id);
     // after succesfull login, redirect
@@ -51,31 +55,35 @@ export async function signup(prevState, formData) {
 }
 
 export async function login(prevState, formData) {
-  // get data from fromdata
   const email = formData.get("email");
   const password = formData.get("password");
-  // cal getUserByEmail and check if user wxist
+
   const existingUser = getUserByEmail(email);
   if (!existingUser) {
     return {
-      errors: {
-        email: "Could not authenticate user, please check your credentials",
-      },
+      errors: { email: "Invalid credentials." },
     };
   }
-  // verify, if password is equal to hash passwrod in database with function verifyPassword
+
   const isValidPassword = verifyPassword(existingUser.password, password);
   if (!isValidPassword) {
     return {
-      errors: {
-        password: "Could not authenticate user, please check your credentials",
-      },
+      errors: { password: "Invalid credentials." },
     };
   }
-  // after create user, calling createAuthSession, which make login
 
+  // ✅ Vytvoříme session
   await createAuthSession(existingUser.id);
-  redirect("/");
+
+  // ✅ Získáme uživatele a nastavíme ho do UserContext
+  return {
+    success: true,
+    user: {
+      id: existingUser.id,
+      role: existingUser.role,
+      email: existingUser.email,
+    },
+  };
 }
 
 export async function auth(mode, prevState, formData) {

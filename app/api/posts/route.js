@@ -2,7 +2,13 @@ import db from "@/lib/db";
 
 export async function POST(request) {
   const body = await request.json();
-  const { location = [], salary, jobContract = [] } = body;
+  const {
+    location = [],
+    salary,
+    jobContract = [],
+    seniority = [],
+    field = [],
+  } = body;
 
   let whereClause = "1=1"; // Výchozí podmínka
   const params = [];
@@ -27,8 +33,22 @@ export async function POST(request) {
     params.push(...jobContract);
   }
 
+  // Filtrování podle seniority
+  if (seniority.length > 0) {
+    const placeholders = seniority.map(() => "?").join(", ");
+    whereClause += ` AND seniority IN (${placeholders})`;
+    params.push(...seniority);
+  }
+
+  // Filtrování podle oboru
+  if (field.length > 0) {
+    const placeholders = field.map(() => "?").join(", ");
+    whereClause += ` AND field IN (${placeholders})`;
+    params.push(...field);
+  }
+
   const stmt = db.prepare(`
-    SELECT posts.id, image_url AS image, title, content, created_at AS createdAt, email AS userEmail, location, company, salary, job_contract AS jobContract,
+    SELECT posts.id, image_url AS image, title, content, created_at AS createdAt, email AS userEmail, location, company, salary, job_contract AS jobContract, seniority, field,
     COUNT(likes.post_id) AS likes,
     EXISTS(SELECT * FROM likes WHERE likes.post_id = posts.id AND likes.user_id = 2) AS isLiked
     FROM posts

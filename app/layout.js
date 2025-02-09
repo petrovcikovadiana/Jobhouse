@@ -1,6 +1,7 @@
-import MainHeader from "@/components/main-header";
 import "./globals.css";
 import Header from "@/components/header";
+import { UserProvider } from "./context/UserContext"; // Opravený import
+import HeaderClient from "@/components/HeaderClient";
 
 export const metadata = {
   title: "Next.js Page Routing & Rendering",
@@ -11,8 +12,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Header />
-        <main> {children}</main>
+        <UserProvider>
+          <HeaderClient />
+          <main>{children}</main>
+        </UserProvider>
       </body>
     </html>
   );

@@ -7,6 +7,8 @@ export default function Filter({ onApply }) {
     location: [], // Může obsahovat více lokalit
     salary: 0,
     jobContract: [],
+    field: [],
+    seniority: [],
   });
 
   const handleLocationClick = (location) => {
@@ -24,6 +26,24 @@ export default function Filter({ onApply }) {
       jobContract: prev.jobContract.includes(jobContract)
         ? prev.jobContract.filter((job) => job !== jobContract)
         : [...prev.jobContract, jobContract],
+    }));
+  };
+
+  const handleFieldClick = (field) => {
+    setFilters((prev) => ({
+      ...prev,
+      field: prev.field.includes(field)
+        ? prev.field.filter((fie) => fie !== field)
+        : [...prev.field, field],
+    }));
+  };
+
+  const handleSeniorityClick = (seniority) => {
+    setFilters((prev) => ({
+      ...prev,
+      seniority: prev.seniority.includes(seniority)
+        ? prev.seniority.filter((sen) => sen !== seniority)
+        : [...prev.seniority, seniority],
     }));
   };
 
@@ -81,7 +101,7 @@ export default function Filter({ onApply }) {
           ))}
         </div>
       </div>
-      <div>
+      <div style={{ marginTop: "15px" }}>
         <label htmlFor="salary">Salary:</label>
         <input
           type="range"
@@ -113,7 +133,8 @@ export default function Filter({ onApply }) {
               style={{
                 padding: "10px 15px",
                 border: "1px solid #ccc",
-                borderRadius: "5px",
+                borderRadius: "15px",
+
                 backgroundColor: filters.jobContract.includes(jobContract)
                   ? "#007BFF" // Modrá, pokud je vybraná
                   : "#fff", // Bílá, pokud není vybraná
@@ -128,7 +149,68 @@ export default function Filter({ onApply }) {
           ))}
         </div>
       </div>
-      <button type="submit">Apply Filters</button>
+      <div>
+        <p>Field:</p>
+        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+          {[
+            "Web development",
+            "QA / Tester",
+            "Marketing",
+            "Design",
+            "IT Analyst",
+            "Project manager",
+            "IT admin",
+          ].map((field) => (
+            <button
+              key={field}
+              type="button"
+              onClick={() => handleFieldClick(field)}
+              style={{
+                padding: "10px 15px",
+                border: "1px solid #ccc",
+                borderRadius: "15px",
+
+                backgroundColor: filters.field.includes(field)
+                  ? "rgb(193, 127, 204)" // Modrá, pokud je vybraná
+                  : "#fff", // Bílá, pokud není vybraná
+                color: filters.field.includes(field) ? "#fff" : "#000",
+                cursor: "pointer",
+              }}
+            >
+              {field}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <p>Seniority:</p>
+        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+          {["Junior", "Medior", "Senior", "Student"].map((seniority) => (
+            <button
+              key={seniority}
+              type="button"
+              onClick={() => handleSeniorityClick(seniority)}
+              style={{
+                padding: "10px 15px",
+                border: "1px solid #ccc",
+                borderRadius: "15px",
+
+                backgroundColor: filters.seniority.includes(seniority)
+                  ? "rgb(193, 127, 204)" // Modrá, pokud je vybraná
+                  : "#fff", // Bílá, pokud není vybraná
+                color: filters.seniority.includes(seniority) ? "#fff" : "#000",
+                cursor: "pointer",
+              }}
+            >
+              {seniority}
+            </button>
+          ))}
+        </div>
+      </div>
+      <button className="btn-filter" type="submit">
+        Apply Filters
+      </button>
     </form>
   );
 }

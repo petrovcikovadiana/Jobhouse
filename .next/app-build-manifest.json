@@ -11,40 +11,35 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
+    "/api/auth/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/auth/route.js"
+    ],
     "/api/posts/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/api/posts/route.js"
     ],
-    "/feed/error": [
+    "/login-form/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/feed/error.js"
+      "static/chunks/app/login-form/not-found.js"
     ],
-    "/feed/loading": [
+    "/login-form/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/feed/loading.js"
+      "static/chunks/app/login-form/page.js"
     ],
-    "/feed/[slug]/page": [
+    "/profile/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/feed/[slug]/page.js"
+      "static/chunks/app/profile/page.js"
     ],
-    "/feed/page": [
+    "/api/job-seeker/profile/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/feed/page.js"
-    ],
-    "/new-post/error": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/new-post/error.js"
-    ],
-    "/new-post/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/new-post/page.js"
+      "static/chunks/app/api/job-seeker/profile/route.js"
     ]
   }
 }

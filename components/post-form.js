@@ -20,8 +20,8 @@ export default function PostForm({ action }) {
 
   return (
     <>
-      <h1>Create a new post</h1>
-      <form onSubmit={handleSubmit}>
+      <h1>Create a new position</h1>
+      <form className="form-layout" onSubmit={handleSubmit}>
         <p className="form-control">
           <label htmlFor="title">Title</label>
           <input type="text" id="title" name="title" />
@@ -43,6 +43,24 @@ export default function PostForm({ action }) {
           <input type="text" id="jobContract" name="jobContract" />
         </p>
         <p className="form-control">
+          <label htmlFor="field">Field</label>
+          <select id="field" name="field">
+            <option value="">Select field</option>
+            <option value="Web development">Web development</option>
+            <option value="QA / Tester">QA / Tester</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Design">Design</option>
+            <option value="IT Analyst">IT Analyst</option>
+            <option value="Project manager">Project manager</option>
+            <option value="IT admin">IT admin</option>
+          </select>
+        </p>
+
+        <p className="form-control">
+          <label htmlFor="seniority">Seniority</label>
+          <input type="text" id="seniority" name="seniority" />
+        </p>
+        <p className="form-control">
           <label htmlFor="image">Image </label>
           <input
             type="file"
@@ -58,7 +76,6 @@ export default function PostForm({ action }) {
         <div className="form-actions">
           <FormSubmit />
         </div>
-
         {/* Zobrazení chyb */}
         {errors.length > 0 && (
           <ul className="form-errors">
