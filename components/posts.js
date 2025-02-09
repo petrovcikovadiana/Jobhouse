@@ -21,9 +21,7 @@ function Post({ post }) {
             </h2>{" "}
             {/* <p>
               Shared by {post.userEmail} on{" "}
-              <time dateTime={post.createdAt}>
-                {formatDate(post.createdAt)}
-              </time>
+             
             </p> */}
             <p className="post-company">
               {" "}
@@ -43,6 +41,8 @@ function Post({ post }) {
                 CZK
               </p>
               <p>{post.jobContract}</p>
+              <p>{post.field}</p>
+              <p>{post.seniority}</p>
             </div>
           </div>
           {/* <div>

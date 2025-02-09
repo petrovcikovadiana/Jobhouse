@@ -21,6 +21,8 @@ export async function createPost(formData) {
   const salary = formData.get("salary");
   const jobContract = formData.get("jobContract");
   const company = formData.get("company");
+  const field = formData.get("field");
+  const seniority = formData.get("seniority");
   const errors = [];
 
   // Validace vstupů
@@ -43,6 +45,14 @@ export async function createPost(formData) {
   }
   if (!company || company.trim().length === 0) {
     errors.push("Company is required.");
+  }
+
+  if (!field || field.trim().length === 0) {
+    errors.push("Field is required.");
+  }
+
+  if (!seniority || seniority.trim().length === 0) {
+    errors.push("Seniority is required.");
   }
 
   if (!image || image.size === 0) {
@@ -71,6 +81,8 @@ export async function createPost(formData) {
     salary,
     jobContract,
     company,
+    field,
+    seniority,
   });
   revalidatePath("/", "layout");
   redirect("/feed"); // Přesměrování po úspěšném vytvoření příspěvku

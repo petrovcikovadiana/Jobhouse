@@ -2,20 +2,31 @@
 import logo from "@/assets/logo.png";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useUser } from "@/app/context/UserContext";
 
-export default function HeaderClient({ isLoggedIn }) {
+export default function HeaderClient() {
+  const { user, setUser, fetchUser, loading } = useUser();
   const router = useRouter();
+
+  useEffect(() => {
+    fetchUser(); // 🟢 Po načtení stránky načte uživatele
+  }, []);
 
   const handleLogout = async () => {
     const response = await fetch("/api/logout", { method: "POST" });
 
     if (response.ok) {
-      router.push("/");
-      router.refresh();
+      setUser(null);
+      router.refresh(); // 🔄 Okamžitý rerender stránky
     } else {
       console.error("Failed to logout");
     }
   };
+
+  // 🟢 Nevykreslovat hlavičku, dokud se neověří uživatel
+  if (loading) return null;
+
   return (
     <header id="main-header">
       <Link href="/">
@@ -26,14 +37,21 @@ export default function HeaderClient({ isLoggedIn }) {
           <li>
             <Link href="/feed">Feed</Link>
           </li>
-          {isLoggedIn && (
+          {user?.role === "employer" && (
             <li>
               <Link href="/new-post">New Post</Link>
             </li>
           )}
-          {isLoggedIn ? (
+          {user?.role === "job_seeker" && (
             <li>
-              <button onClick={handleLogout}>Logout</button>
+              <Link href="/profile">My Profile</Link>
+            </li>
+          )}
+          {user ? (
+            <li>
+              <button className="btn-logout" onClick={handleLogout}>
+                Logout
+              </button>
             </li>
           ) : (
             <li>
