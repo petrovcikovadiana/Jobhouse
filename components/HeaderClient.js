@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useUser } from "@/app/context/UserContext";
+import { FaRegUser } from "react-icons/fa6";
 
 export default function HeaderClient() {
   const { user, setUser, fetchUser, loading } = useUser();
@@ -43,13 +44,17 @@ export default function HeaderClient() {
             </li>
           )}
           {user?.role === "job_seeker" && (
-            <li>
-              <Link href="/profile">My Profile</Link>
+            <li className="profile-link">
+              <Link href="/profile" className="profile-link-container">
+                <FaRegUser className="profile-icon" />
+                <span>My Profile</span>
+              </Link>
             </li>
           )}
+
           {user ? (
             <li>
-              <button className="btn-logout" onClick={handleLogout}>
+              <button className="btn-logout text-xl" onClick={handleLogout}>
                 Logout
               </button>
             </li>

@@ -14,7 +14,7 @@ export async function GET(req) {
   const profile = db
     .prepare(
       `
-    SELECT users.id, users.email, job_seeker_profiles.full_name, job_seeker_profiles.cv_url
+    SELECT users.id, users.name, users.email, job_seeker_profiles.full_name, job_seeker_profiles.cv_url
     FROM users
     LEFT JOIN job_seeker_profiles ON users.id = job_seeker_profiles.user_id
     WHERE users.id = ?

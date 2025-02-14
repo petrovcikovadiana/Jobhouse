@@ -8,6 +8,8 @@ export async function POST(request) {
     jobContract = [],
     seniority = [],
     field = [],
+    languages = [],
+    technology = [],
   } = body;
 
   let whereClause = "1=1"; // Výchozí podmínka
@@ -47,8 +49,21 @@ export async function POST(request) {
     params.push(...field);
   }
 
+  // ✅ Filtr podle jazyků
+  if (languages.length > 0) {
+    const placeholders = languages.map(() => "?").join(", ");
+    whereClause += ` AND languages LIKE '%' || ? || '%'`;
+    params.push(...languages);
+  }
+
+  // ✅ Filtr podle technologie
+  if (technology.length > 0) {
+    const placeholders = technology.map(() => "?").join(", ");
+    whereClause += ` AND technology LIKE '%' || ? || '%'`;
+    params.push(...technology);
+  }
   const stmt = db.prepare(`
-    SELECT posts.id, image_url AS image, title, content, created_at AS createdAt, email AS userEmail, location, company, salary, job_contract AS jobContract, seniority, field,
+    SELECT posts.id, image_url AS image, title, content, created_at AS createdAt, email AS userEmail, location, company, salary, job_contract AS jobContract, seniority, field, languages, technology,
     COUNT(likes.post_id) AS likes,
     EXISTS(SELECT * FROM likes WHERE likes.post_id = posts.id AND likes.user_id = 2) AS isLiked
     FROM posts

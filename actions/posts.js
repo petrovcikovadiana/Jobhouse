@@ -23,6 +23,11 @@ export async function createPost(formData) {
   const company = formData.get("company");
   const field = formData.get("field");
   const seniority = formData.get("seniority");
+  const languages = formData.get("languages");
+  const technology = formData.get("technology");
+  const requirements = formData.get("requirements");
+  const skills = formData.get("skills");
+  const benefits = formData.get("benefits");
   const errors = [];
 
   // Validace vstupů
@@ -55,6 +60,22 @@ export async function createPost(formData) {
     errors.push("Seniority is required.");
   }
 
+  if (!languages || languages.trim().length === 0) {
+    errors.push("languages is required.");
+  }
+  if (!technology || technology.trim().length === 0) {
+    errors.push("technology is required.");
+  }
+  if (!requirements || requirements.trim().length === 0) {
+    errors.push("requirements is required.");
+  }
+  if (!skills || skills.trim().length === 0) {
+    errors.push("skills is required.");
+  }
+  if (!benefits || benefits.trim().length === 0) {
+    errors.push("benefits is required.");
+  }
+
   if (!image || image.size === 0) {
     errors.push("Image is required.");
   }
@@ -83,6 +104,11 @@ export async function createPost(formData) {
     company,
     field,
     seniority,
+    languages,
+    technology,
+    requirements,
+    skills,
+    benefits,
   });
   revalidatePath("/", "layout");
   redirect("/feed"); // Přesměrování po úspěšném vytvoření příspěvku

@@ -1,22 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 export default function Filter({ onApply }) {
   const [filters, setFilters] = useState({
-    location: [], // Může obsahovat více lokalit
-    salary: 0,
+    location: [],
+    salary: 10000,
     jobContract: [],
     field: [],
     seniority: [],
   });
 
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // ✅ Zajistí, že částka se vykreslí až na klientovi
+  }, []);
+
   const handleLocationClick = (location) => {
     setFilters((prev) => ({
       ...prev,
       location: prev.location.includes(location)
-        ? prev.location.filter((loc) => loc !== location) // Odebere lokaci
-        : [...prev.location, location], // Přidá lokaci
+        ? prev.location.filter((loc) => loc !== location)
+        : [...prev.location, location],
     }));
   };
 
@@ -47,25 +53,29 @@ export default function Filter({ onApply }) {
     }));
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFilters((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const handleSalaryChange = (e) => {
+    const newSalary = Number(e.target.value);
     setFilters((prev) => ({
       ...prev,
-      salary: e.target.value,
+      salary: newSalary, // ✅ Aktualizuje hodnotu platu přímo ve `filters`
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onApply(filters); // Předání filtrů rodičovské komponentě
+    console.log("Filters applied:", filters); // ✅ Debugging
+    onApply(filters);
   };
+
+  // ✅ Použití `Intl.NumberFormat` pro správné formátování částky v CZK
+  const formattedSalary = useMemo(
+    () =>
+      new Intl.NumberFormat("cs-CZ", {
+        style: "currency",
+        currency: "CZK",
+      }).format(filters.salary),
+    [filters.salary]
+  );
 
   return (
     <form onSubmit={handleSubmit}>
@@ -90,8 +100,8 @@ export default function Filter({ onApply }) {
                 border: "1px solid #ccc",
                 borderRadius: "15px",
                 backgroundColor: filters.location.includes(location)
-                  ? "rgb(193, 127, 204)" // Modrá, pokud je vybraná
-                  : "#fff", // Bílá, pokud není vybraná
+                  ? "rgb(193, 127, 204)"
+                  : "#fff",
                 color: filters.location.includes(location) ? "#fff" : "#000",
                 cursor: "pointer",
               }}
@@ -101,20 +111,27 @@ export default function Filter({ onApply }) {
           ))}
         </div>
       </div>
-      <div style={{ marginTop: "15px" }}>
-        <label htmlFor="salary">Salary:</label>
+
+      <div className="salary-filter">
+        <label>Salary range</label>
+        <div className="salary-values">
+          {isClient ? (
+            <span>{formattedSalary} - 200 000 Kč</span>
+          ) : (
+            <span>{filters.salary} Kč - 200 000 Kč</span>
+          )}
+        </div>
         <input
           type="range"
-          id="salary"
-          name="salary"
-          min="0"
-          max="100000"
+          min="10000"
+          max="200000"
           step="1000"
           value={filters.salary}
           onChange={handleSalaryChange}
+          className="salary-slider"
         />
-        <p>Selected Salary: {filters.salary} CZK</p>
       </div>
+
       <div>
         <p>Job Contract:</p>
         <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
@@ -134,10 +151,9 @@ export default function Filter({ onApply }) {
                 padding: "10px 15px",
                 border: "1px solid #ccc",
                 borderRadius: "15px",
-
                 backgroundColor: filters.jobContract.includes(jobContract)
-                  ? "#007BFF" // Modrá, pokud je vybraná
-                  : "#fff", // Bílá, pokud není vybraná
+                  ? "#007BFF"
+                  : "#fff",
                 color: filters.jobContract.includes(jobContract)
                   ? "#fff"
                   : "#000",
@@ -149,6 +165,7 @@ export default function Filter({ onApply }) {
           ))}
         </div>
       </div>
+
       <div>
         <p>Field:</p>
         <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
@@ -169,10 +186,9 @@ export default function Filter({ onApply }) {
                 padding: "10px 15px",
                 border: "1px solid #ccc",
                 borderRadius: "15px",
-
                 backgroundColor: filters.field.includes(field)
-                  ? "rgb(193, 127, 204)" // Modrá, pokud je vybraná
-                  : "#fff", // Bílá, pokud není vybraná
+                  ? "rgb(193, 127, 204)"
+                  : "#fff",
                 color: filters.field.includes(field) ? "#fff" : "#000",
                 cursor: "pointer",
               }}
@@ -195,10 +211,9 @@ export default function Filter({ onApply }) {
                 padding: "10px 15px",
                 border: "1px solid #ccc",
                 borderRadius: "15px",
-
                 backgroundColor: filters.seniority.includes(seniority)
-                  ? "rgb(193, 127, 204)" // Modrá, pokud je vybraná
-                  : "#fff", // Bílá, pokud není vybraná
+                  ? "rgb(193, 127, 204)"
+                  : "#fff",
                 color: filters.seniority.includes(seniority) ? "#fff" : "#000",
                 cursor: "pointer",
               }}
@@ -208,6 +223,7 @@ export default function Filter({ onApply }) {
           ))}
         </div>
       </div>
+
       <button className="btn-filter" type="submit">
         Apply Filters
       </button>
