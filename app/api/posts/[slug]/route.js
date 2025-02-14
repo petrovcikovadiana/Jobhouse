@@ -1,7 +1,7 @@
 import db from "@/lib/db";
 
 export async function GET(req, context) {
-  const params = await context.params; // 🔹 Použijeme `await`
+  const params = await context.params;
   const { slug } = params;
 
   // Získání detailu příspěvku
@@ -21,6 +21,20 @@ export async function GET(req, context) {
       status: 404,
     });
   }
+
+  function safeParse(jsonString) {
+    try {
+      return JSON.parse(jsonString);
+    } catch (error) {
+      console.error("❌ JSON parse error:", error);
+      return [];
+    }
+  }
+
+  post.requirements = safeParse(post.requirements);
+  post.skills = safeParse(post.skills);
+  post.benefits = safeParse(post.benefits);
+  post.languages = safeParse(post.languages);
 
   // Získání uchazečů, kteří se přihlásili na tuto nabídku
   const applicants = db

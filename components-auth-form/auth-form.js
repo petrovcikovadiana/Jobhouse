@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/app/context/UserContext"; // Použití kontextu
+import { useUser } from "@/app/context/UserContext";
 import { auth } from "@/actions/auth-actions";
 
 export default function AuthForm({ mode }) {
-  const { setUser } = useUser(); // ✅ Přidání UserContextu pro aktualizaci uživatele
+  const { setUser } = useUser();
   const router = useRouter();
   const [formState, setFormState] = useState({ errors: {} });
 
@@ -15,14 +15,19 @@ export default function AuthForm({ mode }) {
     event.preventDefault();
     const formData = new FormData(event.target);
 
-    const result = await auth(mode, {}, formData); // Volání serverové akce
+    console.log("Form data being submitted:");
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
+    const result = await auth(mode, {}, formData);
 
     if (result?.errors) {
-      setFormState(result); // Nastavení chyb pokud jsou
+      setFormState(result);
     } else {
-      setUser(result.user); // ✅ Okamžitě aktualizujeme UserContext
-      router.refresh(); // ✅ Provede refresh stránky a aktualizaci headeru
-      router.push("/"); // ✅ Přesměrování na homepage
+      setUser(result.user);
+      router.refresh();
+      router.push("/");
     }
   };
 
@@ -31,11 +36,19 @@ export default function AuthForm({ mode }) {
       <div>
         <img src="/images/lock.webp" alt="A lock icon" />
       </div>
+
+      {/* Name only in signup */}
+      {mode === "signup" && (
+        <p>
+          <label htmlFor="name">Full Name</label>
+          <input type="text" name="name" id="name" required />
+        </p>
+      )}
       <p>
         <label htmlFor="email">Email</label>
         <input type="email" name="email" id="email" required />
       </p>
-      {/* Volba role pouze při registraci */}
+      {/* Role only in signup */}
       {mode === "signup" && (
         <p>
           <label htmlFor="role">Register as:</label>

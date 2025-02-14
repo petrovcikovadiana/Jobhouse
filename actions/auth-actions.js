@@ -10,6 +10,7 @@ import { verifyPassword } from "@/lib/hash";
 export async function signup(prevState, formData) {
   // get data from form
   const email = formData.get("email");
+  const name = formData.get("name");
   const password = formData.get("password");
   const role = formData.get("role"); // GET ROLE FROM FORM
 
@@ -36,7 +37,7 @@ export async function signup(prevState, formData) {
   const hashedPassword = hashUserPassword(password);
   try {
     // save user to database
-    const id = await createUser(email, hashedPassword, role);
+    const id = await createUser(email, name, hashedPassword, role);
     // after create user, calling createAuthSession, which make login
     await createAuthSession(id);
     // after succesfull login, redirect
@@ -80,6 +81,7 @@ export async function login(prevState, formData) {
     success: true,
     user: {
       id: existingUser.id,
+      name: existingUser.name,
       role: existingUser.role,
       email: existingUser.email,
     },

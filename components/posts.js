@@ -1,5 +1,3 @@
-import { formatDate } from "@/lib/format";
-import LikeButton from "./like-icon";
 import Link from "next/link";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { IoLocationOutline } from "react-icons/io5";
@@ -7,53 +5,45 @@ import { PiMoney } from "react-icons/pi";
 
 function Post({ post }) {
   return (
-    <article className="post">
-      <div className="post-content">
-        <header>
-          <div>
-            <h2>
-              <Link
-                href={`/feed/${post.id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                {post.title}
-              </Link>
-            </h2>{" "}
-            {/* <p>
-              Shared by {post.userEmail} on{" "}
-             
-            </p> */}
-            <p className="post-company">
-              {" "}
-              <HiOutlineBuildingOffice2 /> {post.company}
-            </p>
-            <p>
-              {" "}
-              <IoLocationOutline /> {post.location}
-            </p>
-            <div className="skills">
-              {" "}
+    <Link
+      href={`/feed/${post.id}`}
+      style={{ textDecoration: "none", color: "inherit" }}
+    >
+      <article className="post">
+        <div className="post-content">
+          <header>
+            <div>
+              <h2>{post.title}</h2> <p>Shared by {post.userEmail} </p>
+              <p className="post-company">
+                {" "}
+                <HiOutlineBuildingOffice2 /> {post.company}
+              </p>
               <p>
                 {" "}
-                <PiMoney /> {new Intl.NumberFormat("cs-CZ").format(
-                  post.salary
-                )}{" "}
-                CZK
+                <IoLocationOutline /> {post.location}
               </p>
-              <p>{post.jobContract}</p>
-              <p>{post.field}</p>
-              <p>{post.seniority}</p>
+              <div className="skills">
+                {" "}
+                <p>
+                  {" "}
+                  <PiMoney />{" "}
+                  {new Intl.NumberFormat("cs-CZ").format(post.salary)} CZK
+                </p>
+                <p>{post.jobContract}</p>
+                <p>{post.field}</p>
+                <p>{post.seniority}</p>
+              </div>
             </div>
-          </div>
-          {/* <div>
+            {/* <div>
             <LikeButton />
           </div> */}
-        </header>
-      </div>
-      <div className="post-image">
-        <img src={post.image} alt={post.title} />
-      </div>
-    </article>
+          </header>
+        </div>
+        <div className="post-image">
+          <img src={post.image} alt={post.title} />
+        </div>
+      </article>
+    </Link>
   );
 }
 

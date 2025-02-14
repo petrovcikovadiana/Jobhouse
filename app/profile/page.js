@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useUser } from "@/app/context/UserContext";
+import { useRouter } from "next/navigation";
 
 export default function JobSeekerProfilePage() {
   const { user } = useUser();
+  const router = useRouter();
   const [profile, setProfile] = useState(null);
   const [applications, setApplications] = useState([]);
 
@@ -31,37 +33,44 @@ export default function JobSeekerProfilePage() {
   if (!profile) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="profile-container">
       <h1>Job Seeker Profile</h1>
-      <p>
-        <strong>Name:</strong> {profile.full_name}
-      </p>
-      <p>
-        <strong>Email:</strong> {profile.email}
-      </p>
-      {profile.cv_url && (
+      <div className="profile-info">
         <p>
-          <strong>CV:</strong>{" "}
-          <a href={profile.cv_url} target="_blank">
-            View CV
-          </a>
+          <strong>Name:</strong> {profile.name}
         </p>
-      )}
+        <p>
+          <strong>Email:</strong> {profile.email}
+        </p>
+        {profile.cv_url && (
+          <p>
+            <strong>CV:</strong>{" "}
+            <a href={profile.cv_url} target="_blank" rel="noopener noreferrer">
+              View CV
+            </a>
+          </p>
+        )}
+      </div>
 
       <h2>My Applications</h2>
       {applications.length > 0 ? (
-        <ul>
+        <div className="applications-grid">
           {applications.map((job) => (
-            <li key={job.id}>
+            <div
+              key={job.id}
+              className="job-card"
+              onClick={() => router.push(`/feed/${job.id}`)} // ✅ Kliknutí přesměruje na detail nabídky
+            >
+              <h3>{job.title}</h3>
               <p>
-                <strong>{job.title}</strong> at {job.company}
+                <strong>{job.company}</strong>
               </p>
-              <p>
-                {job.location} | {job.salary} CZK | {job.job_contract}
-              </p>
-            </li>
+              <p>{job.location}</p>
+              <p>{new Intl.NumberFormat("cs-CZ").format(job.salary)} CZK</p>
+              <p>{job.job_contract}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <p>No applications yet.</p>
       )}
