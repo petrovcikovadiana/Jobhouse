@@ -341,47 +341,6 @@ main {
   background-color: #5f2a8a;
 }
 
-#training-sessions {
-  max-width: 40rem;
-  margin: 2rem auto;
-  list-style: none;
-  padding: 0;
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
-}
-
-#training-sessions li {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1rem 0;
-  border-radius: 4px;
-  background-color: #0a0a0a;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
-}
-
-#training-sessions li img {
-  width: 100%;
-}
-
-#training-sessions li h2 {
-  margin: 1rem 0 0 0;
-  padding: 0 1rem;
-  color: #d0cfd6;
-  font-size: 1rem;
-  text-transform: uppercase;
-}
-
-#training-sessions li div {
-  text-align: center;
-}
-
-#training-sessions li p {
-  margin: 1rem;
-  color: #7c7a80;
-}
-
 .form-layout {
   width: 50%;
   max-width: 60rem;
@@ -398,8 +357,35 @@ main {
   width: 100%;
   margin-bottom: 0.25rem;
 }
+.language-container {
+  display: flex;
+  flex-wrap: wrap; /* Aby checkboxy nebyly na jednom řádku, pokud je jich hodně */
+  gap: 10px; /* Mezera mezi jednotlivými checkboxy */
+  margin-top: 8px;
+}
+
+.language-option {
+  display: flex;
+  align-items: center; /* Zarovná checkbox s textem na stejnou úroveň */
+  gap: 5px; /* Malá mezera mezi checkboxem a textem */
+  font-size: 16px;
+  cursor: pointer; /* Kliknutím na text se zaškrtne checkbox */
+}
+
+/* Styl samotného checkboxu */
+.checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
 
 .form-control label {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: rgb(100, 58, 79);
+}
+
+.custom-dropdown label {
   font-weight: bold;
   font-size: 0.9rem;
   color: rgb(100, 58, 79);
@@ -426,7 +412,7 @@ main {
   font: inherit;
   padding: 0.5rem 1rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 15px;
   background-color: rgb(100, 58, 79);
   color: #eee7ea;
   cursor: pointer;
@@ -544,6 +530,7 @@ main {
 
 .post-company {
   color: #3779f6;
+  font-size: 14px;
 }
 
 .detail-container {
@@ -551,6 +538,11 @@ main {
   flex-direction: rows;
   justify-content: space-between;
   margin: 0 2rem;
+  gap: 2rem;
+}
+
+.detail-content {
+  flex: 8;
 }
 
 .detail-header {
@@ -563,7 +555,7 @@ main {
 .detail-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  flex: 2;
 }
 
 .sidebar-row {
@@ -572,7 +564,7 @@ main {
   gap: 8px;
 }
 
-.detail-header h1 {
+.detail-header h2 {
   font-size: 1.4rem;
   margin: 0;
 }
@@ -587,30 +579,13 @@ main {
 .detail-img {
   width: 8rem;
   height: 6rem;
-  object-fit: contain;
+  object-fit: cover;
+  display: block;
 }
 
-.like-button {
-  background-color: transparent;
-  border: none;
+.detail-main {
+  margin: 15px auto;
 }
-
-.like-button svg {
-  width: 1.5rem;
-  height: 1.5rem;
-  fill: transparent;
-  stroke: #e32195;
-}
-
-.like-button:hover svg,
-.liked .like-button svg {
-  fill: #e32195;
-}
-
-.liked .like-button:hover svg {
-  fill: transparent;
-}
-
 .home-layout {
   display: flex;
   gap: 2rem;
@@ -660,13 +635,11 @@ main {
   transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out; /* Animace */
 }
 
-/* Efekt při najetí myší */
 .btn-filter:hover {
   background-color: rgb(182, 108, 195); /* Trochu tmavší odstín při hover */
   transform: scale(1.05); /* Mírné zvětšení */
 }
 
-/* Efekt při kliknutí */
 .btn-filter:active {
   background-color: rgb(131, 59, 144); /* Ještě tmavší odstín */
   transform: scale(0.95); /* Mírné zmenšení pro efekt stisknutí */
@@ -741,20 +714,61 @@ main {
   background: #ddd;
 }
 
-/* Tlačítko Apply */
 .apply-btn {
   background: rgb(193, 127, 204);
   color: white;
   border: none;
   padding: 10px 20px;
   font-size: 18px;
-  border-radius: 8px;
+  margin: 30px auto;
+  border-radius: 15px;
   cursor: pointer;
   transition: 0.3s ease;
 }
 
 .apply-btn:hover {
   background: rgb(193, 127, 204);
+}
+.sidebar-layout {
+  margin: 15px auto;
+}
+.sidebar-header {
+  color: rgb(3, 3, 3);
+  font-size: 13px;
+}
+
+.benefits-list {
+  display: flex;
+  flex-direction: columns;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+}
+
+.show-more-btn {
+  background: rgb(193, 127, 204);
+  color: white;
+  border-radius: 15px;
+  cursor: pointer;
+}
+.sidebar-btn {
+  background: rgb(189, 114, 203);
+  color: white;
+  border: none;
+  padding: 3px 5px;
+  width: 45%;
+  display: flex;
+  flex-direction: rows;
+  font-size: 13px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.sidebar-btn:hover {
+  background: rgb(189, 114, 203);
 }
 
 .salary-filter {
@@ -821,7 +835,7 @@ main {
 
 .job-card {
   background: linear-gradient(135deg, rgb(189, 170, 208), rgb(170, 173, 184));
-  color: white;
+  color: black;
   padding: 15px;
   border-radius: 8px;
   cursor: pointer;
@@ -842,6 +856,12 @@ main {
   font-size: 14px;
 }
 
+.job-info {
+  display: flex;
+  flex-direction: rows;
+  gap: 5px;
+}
+
 .dynamic-section {
   margin-bottom: 15px;
 }
@@ -856,8 +876,9 @@ main {
 .dynamic-input input {
   flex: 1;
   padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background: rgb(176, 168, 171);
+
+  border-radius: 15px;
 }
 
 .dynamic-input button {
@@ -865,24 +886,157 @@ main {
   color: white;
   border: none;
   padding: 6px 10px;
-  border-radius: 5px;
+  border-radius: 15px;
   cursor: pointer;
 }
 
 .add-btn {
-  background: #007bff;
+  background: rgb(100, 58, 79);
   color: white;
   padding: 8px 12px;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   cursor: pointer;
   margin-top: 5px;
 }
 
 .add-btn:hover {
-  background: #0056b3;
+  background: rgb(176, 168, 171);
 }
 
 .form-actions {
   margin-top: 20px;
+}
+
+.input-title {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: rgb(100, 58, 79);
+}
+
+.languages-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0 0;
+}
+
+.language-item {
+  background-color: rgb(110, 195, 198);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.technology-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0 0;
+}
+
+.technology-item {
+  background-color: rgb(110, 198, 154);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.links {
+  margin: auto 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Zvýši medzeru medzi ikonou a textom */
+}
+
+.applicants-container {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.applicants-container h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.applicants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.applicant-card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.applicant-card:hover {
+  transform: translateY(-5px);
+}
+
+.applicant-info {
+  margin-bottom: 10px;
+}
+
+.no-applicants {
+  text-align: center;
+  font-size: 1rem;
+  color: #666;
+}
+
+.custom-dropdown {
+  position: relative;
+  width: 30%;
+}
+
+.custom-dropdown select {
+  width: 100%;
+  padding: 10px 15px;
+  color: white;
+  font-size: 16px;
+  border: 2px solid rgb(100, 58, 79);
+  border-radius: 12px;
+  background-color: rgb(176, 168, 171);
+  appearance: none;
+  outline: none;
+  transition: 0.3s ease-in-out;
+}
+
+.custom-dropdown::after {
+  content: "▼";
+  font-size: 14px;
+  color: rgb(100, 58, 79);
+  position: absolute;
+  right: 15px;
+  top: 70%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.custom-dropdown select:hover {
+  border-color: rgb(100, 58, 79);
+}
+
+.custom-dropdown select:focus {
+  border-color: rgb(100, 58, 79);
+  box-shadow: 0 0 5px rgb(176, 168, 171);
 }

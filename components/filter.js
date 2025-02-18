@@ -152,7 +152,7 @@ export default function Filter({ onApply }) {
                 border: "1px solid #ccc",
                 borderRadius: "15px",
                 backgroundColor: filters.jobContract.includes(jobContract)
-                  ? "#007BFF"
+                  ? "rgb(193, 127, 204)"
                   : "#fff",
                 color: filters.jobContract.includes(jobContract)
                   ? "#fff"

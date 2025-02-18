@@ -8,6 +8,7 @@ export default function PostForm({ action }) {
   const [requirements, setRequirements] = useState([""]); // Počáteční požadavek
   const [skills, setSkills] = useState([""]);
   const [benefits, setBenefits] = useState([""]);
+  const [technologies, setTechnologies] = useState([""]);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
 
   const handleSubmit = async (e) => {
@@ -18,6 +19,7 @@ export default function PostForm({ action }) {
     formData.append("requirements", JSON.stringify(requirements));
     formData.append("skills", JSON.stringify(skills));
     formData.append("benefits", JSON.stringify(benefits));
+    formData.append("technologies", JSON.stringify(technologies));
     formData.append("languages", JSON.stringify(selectedLanguages));
 
     // Zavolání serverové akce a zpracování výsledku
@@ -35,6 +37,16 @@ export default function PostForm({ action }) {
   };
   const removeRequirement = (index) => {
     setRequirements(requirements.filter((_, i) => i !== index));
+  };
+
+  const addTechnology = () => setTechnologies([...technologies, ""]);
+  const updateTechnology = (index, value) => {
+    const updated = [...technologies];
+    updated[index] = value;
+    setTechnologies(updated);
+  };
+  const removeTechnology = (index) => {
+    setTechnologies(technologies.filter((_, i) => i !== index));
   };
 
   // Funkce pro přidání nového pole pro dovednosti
@@ -88,8 +100,10 @@ export default function PostForm({ action }) {
           <label htmlFor="salary">Salary</label>
           <input type="text" id="salary" name="salary" />
         </p>
-        <p className="form-control">
-          <label htmlFor="jobContract">Job contract</label>
+        <div className="custom-dropdown">
+          <label htmlFor="jobContract" className="form-control label">
+            Job contract
+          </label>
           <select id="jobContract" name="jobContract">
             <option value="">Select job contract</option>
             <option value="Full time">Full time</option>
@@ -99,8 +113,9 @@ export default function PostForm({ action }) {
             <option value="Contractor">Contractor</option>
             <option value="Trainee">Trainee</option>
           </select>
-        </p>
-        <p className="form-control">
+        </div>
+
+        <p className="custom-dropdown">
           <label htmlFor="field">Field</label>
           <select id="field" name="field">
             <option value="">Select field</option>
@@ -114,7 +129,7 @@ export default function PostForm({ action }) {
           </select>
         </p>
 
-        <p className="form-control">
+        <p className="custom-dropdown">
           <label htmlFor="seniority">Seniority</label>
           <select id="seniority" name="seniority">
             <option value="">Select field</option>
@@ -133,37 +148,56 @@ export default function PostForm({ action }) {
             name="image"
           />
         </p>
-        <p className="form-control">
-          <label>Languages</label>
-          <div>
+        <div>
+          <label className="language-title">Languages</label>
+          <div className="language-container">
             {["English", "German", "French", "Spanish", "Czech", "Slovak"].map(
               (lang) => (
-                <label key={lang}>
+                <label key={lang} className="language-option">
                   <input
                     type="checkbox"
                     value={lang}
                     checked={selectedLanguages.includes(lang)}
                     onChange={handleLanguageChange}
+                    className="checkbox"
                   />
                   {lang}
                 </label>
               )
             )}
           </div>
-        </p>
+        </div>
 
-        <p className="form-control">
-          <label htmlFor="technology">Technology</label>
-          <input type="text" id="technology" name="technology" />
-        </p>
+        <div className="dynamic-section">
+          <label className="input-title">Technology</label>
+          {technologies.map((tech, index) => (
+            <div key={index} className="dynamic-input">
+              <input
+                type="text"
+                name="technologies[]"
+                value={tech}
+                onChange={(e) => updateTechnology(index, e.target.value)}
+                placeholder="Enter technology"
+                required
+              />
+              {technologies.length > 1 && (
+                <button type="button" onClick={() => removeTechnology(index)}>
+                  ❌
+                </button>
+              )}
+            </div>
+          ))}
+          <button type="button" onClick={addTechnology} className="add-btn">
+            + Add technology
+          </button>
+        </div>
 
         <p className="form-control">
           <label htmlFor="content">About position</label>
           <textarea id="content" name="content" rows="5" />
         </p>
-        {/* Requirements Section */}
         <div className="dynamic-section">
-          <label>Náplň práce</label>
+          <label className="input-title">Náplň práce</label>
           {requirements.map((req, index) => (
             <div key={index} className="dynamic-input">
               <input
@@ -182,13 +216,12 @@ export default function PostForm({ action }) {
             </div>
           ))}
           <button type="button" onClick={addRequirement} className="add-btn">
-            ➕ Add náplň práce
+            + Add náplň práce
           </button>
         </div>
 
-        {/* Skills / Qualifications Section */}
         <div className="dynamic-section">
-          <label>Skills / Qualifications</label>
+          <label className="input-title">Skills / Qualifications</label>
           {skills.map((skill, index) => (
             <div key={index} className="dynamic-input">
               <input
@@ -207,12 +240,12 @@ export default function PostForm({ action }) {
             </div>
           ))}
           <button type="button" onClick={addSkill} className="add-btn">
-            ➕ Add Skill
+            + Add Skill
           </button>
         </div>
 
         <div className="dynamic-section">
-          <label>Benefits</label>
+          <label className="input-title">Benefits</label>
           {benefits.map((benefit, index) => (
             <div key={index} className="dynamic-input">
               <input
@@ -231,7 +264,7 @@ export default function PostForm({ action }) {
             </div>
           ))}
           <button type="button" onClick={addBenefit} className="add-btn">
-            ➕ Add Benefit
+            + Add Benefit
           </button>
         </div>
         <div className="form-actions">

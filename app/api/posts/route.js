@@ -9,7 +9,7 @@ export async function POST(request) {
     seniority = [],
     field = [],
     languages = [],
-    technology = [],
+    technologies = [],
   } = body;
 
   let whereClause = "1=1"; // Výchozí podmínka
@@ -57,13 +57,13 @@ export async function POST(request) {
   }
 
   // ✅ Filtr podle technologie
-  if (technology.length > 0) {
-    const placeholders = technology.map(() => "?").join(", ");
-    whereClause += ` AND technology LIKE '%' || ? || '%'`;
-    params.push(...technology);
+  if (technologies.length > 0) {
+    const placeholders = technologies.map(() => "?").join(", ");
+    whereClause += ` AND technologies LIKE '%' || ? || '%'`;
+    params.push(...technologies);
   }
   const stmt = db.prepare(`
-    SELECT posts.id, image_url AS image, title, content, created_at AS createdAt, email AS userEmail, location, company, salary, job_contract AS jobContract, seniority, field, languages, technology,
+    SELECT posts.id, image_url AS image, title, content, created_at AS createdAt, email AS userEmail, location, company, salary, job_contract AS jobContract, seniority, field, languages, technologies,
     COUNT(likes.post_id) AS likes,
     EXISTS(SELECT * FROM likes WHERE likes.post_id = posts.id AND likes.user_id = 2) AS isLiked
     FROM posts

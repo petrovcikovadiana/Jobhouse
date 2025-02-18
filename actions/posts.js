@@ -24,7 +24,7 @@ export async function createPost(formData) {
   const field = formData.get("field");
   const seniority = formData.get("seniority");
   const languages = formData.get("languages");
-  const technology = formData.get("technology");
+  const technologies = formData.get("technologies");
   const requirements = formData.get("requirements");
   const skills = formData.get("skills");
   const benefits = formData.get("benefits");
@@ -63,8 +63,8 @@ export async function createPost(formData) {
   if (!languages || languages.trim().length === 0) {
     errors.push("languages is required.");
   }
-  if (!technology || technology.trim().length === 0) {
-    errors.push("technology is required.");
+  if (!technologies || technologies.trim().length === 0) {
+    errors.push("technologies is required.");
   }
   if (!requirements || requirements.trim().length === 0) {
     errors.push("requirements is required.");
@@ -105,7 +105,7 @@ export async function createPost(formData) {
     field,
     seniority,
     languages,
-    technology,
+    technologies,
     requirements,
     skills,
     benefits,

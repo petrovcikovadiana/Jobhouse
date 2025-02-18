@@ -34,9 +34,6 @@ function Post({ post }) {
                 <p>{post.seniority}</p>
               </div>
             </div>
-            {/* <div>
-            <LikeButton />
-          </div> */}
           </header>
         </div>
         <div className="post-image">
