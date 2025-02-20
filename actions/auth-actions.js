@@ -12,7 +12,7 @@ export async function signup(prevState, formData) {
   const email = formData.get("email");
   const name = formData.get("name");
   const password = formData.get("password");
-  const role = formData.get("role"); // GET ROLE FROM FORM
+  const role = formData.get("role");
 
   // validate email and password
 
@@ -73,10 +73,10 @@ export async function login(prevState, formData) {
     };
   }
 
-  // ✅ Vytvoříme session
+  // create session
   await createAuthSession(existingUser.id);
 
-  // ✅ Získáme uživatele a nastavíme ho do UserContext
+  // get user and save it to usercontext
   return {
     success: true,
     user: {

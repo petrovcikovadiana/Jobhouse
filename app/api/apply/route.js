@@ -2,7 +2,7 @@ import db from "@/lib/db";
 
 export async function POST(req) {
   const { postId } = await req.json();
-  const userId = req.headers.get("userId"); // 📌 Načteme user_id z hlavičky requestu
+  const userId = req.headers.get("userId");
 
   if (!userId) {
     return new Response(
@@ -11,7 +11,7 @@ export async function POST(req) {
     );
   }
 
-  // Ověření, zda už uživatel aplikoval
+  // validate, if user applied already
   const existingApplication = db
     .prepare(
       `
@@ -26,7 +26,7 @@ export async function POST(req) {
     });
   }
 
-  // Uložení přihlášky
+  // saving apply
   db.prepare(
     `
     INSERT INTO applications (post_id, user_id) VALUES (?, ?)

@@ -1,6 +1,6 @@
 import "./globals.css";
 import Header from "@/components/header";
-import { UserProvider } from "./context/UserContext"; // Opravený import
+import { UserProvider } from "./context/UserContext";
 import HeaderClient from "@/components/HeaderClient";
 
 export const metadata = {

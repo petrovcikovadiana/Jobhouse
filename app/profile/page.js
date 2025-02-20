@@ -10,25 +10,38 @@ export default function JobSeekerProfilePage() {
   const [applications, setApplications] = useState([]);
 
   useEffect(() => {
+    if (!user || !user.id) {
+      console.log("⏳ Waiting for user data...");
+      return;
+    }
+
     async function fetchProfile() {
-      if (!user || !user.id) return;
+      try {
+        console.log("📡 Fetching profile for userId:", user.id);
 
-      const response = await fetch("/api/job-seeker/profile", {
-        headers: { userId: user.id },
-      });
+        const response = await fetch("/api/job-seeker/profile", {
+          headers: { userId: user.id },
+        });
 
-      const data = await response.json();
-      if (response.ok) {
-        console.log("Fetched applications:", data.applications); // ✅ Debugging
-        setProfile(data.profile);
-        setApplications(data.applications);
-      } else {
-        console.error("Profile API error:", data.error);
+        const data = await response.json();
+
+        if (response.ok) {
+          setProfile(data.profile);
+          setApplications(data.applications);
+        } else {
+          console.error("❌ Profile API error:", data.error);
+        }
+      } catch (error) {
+        console.error("❌ Fetch error:", error);
       }
     }
 
     fetchProfile();
   }, [user]);
+
+  useEffect(() => {
+    router.refresh();
+  }, []);
 
   if (!profile) return <p>Loading...</p>;
 
@@ -52,22 +65,33 @@ export default function JobSeekerProfilePage() {
         )}
       </div>
 
-      <h2>My Applications</h2>
+      <h2>Applied jobs</h2>
       {applications.length > 0 ? (
         <div className="applications-grid">
           {applications.map((job) => (
             <div
               key={job.id}
               className="job-card"
-              onClick={() => router.push(`/feed/${job.id}`)} // ✅ Kliknutí přesměruje na detail nabídky
+              onClick={() => router.push(`/feed/${job.id}`)}
             >
               <h3>{job.title}</h3>
               <p>
-                <strong>{job.company}</strong>
+                <strong className="post-company">{job.company}</strong>
               </p>
-              <p>{job.location}</p>
-              <p>{new Intl.NumberFormat("cs-CZ").format(job.salary)} CZK</p>
-              <p>{job.job_contract}</p>
+              <div className="detail-header">
+                <p>
+                  <IoLocationOutline /> {post.location}
+                </p>
+                <span>|</span>
+                <p>
+                  <PiMoney />
+                  {new Intl.NumberFormat("cs-CZ").format(post.salary)} CZK
+                </p>
+                <span>|</span>
+                <p>{post.jobContract || "Not specified"}</p>
+                <span>|</span>
+                <p>{post.seniority}</p>
+              </div>
             </div>
           ))}
         </div>

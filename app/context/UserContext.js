@@ -1,14 +1,14 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 
-// Vytvoření kontextu
+// create context
 const UserContext = createContext(null);
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 🟢 Načtení uživatele při startu aplikace
+  // loading user after start app
   const fetchUser = async () => {
     try {
       const response = await fetch("/api/auth");
@@ -21,11 +21,11 @@ export function UserProvider({ children }) {
     } catch (error) {
       console.error("Failed to fetch user:", error);
     } finally {
-      setLoading(false); // Po dokončení requestu nastavíme loading na false
+      setLoading(false); // after finishing logging we set loading to false
     }
   };
 
-  // 🟢 Automaticky zavolat `fetchUser` při načtení aplikace
+  //  call fetchUser after loading app
   useEffect(() => {
     fetchUser();
   }, []);
@@ -37,7 +37,7 @@ export function UserProvider({ children }) {
   );
 }
 
-// Vlastní hook pro přístup k UserContextu
+//  hook for access to userContext
 export function useUser() {
   return useContext(UserContext);
 }

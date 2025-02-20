@@ -14,7 +14,7 @@ export default function Filter({ onApply }) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true); // ✅ Zajistí, že částka se vykreslí až na klientovi
+    setIsClient(true); // Salary is rendering on client
   }, []);
 
   const handleLocationClick = (location) => {
@@ -57,17 +57,16 @@ export default function Filter({ onApply }) {
     const newSalary = Number(e.target.value);
     setFilters((prev) => ({
       ...prev,
-      salary: newSalary, // ✅ Aktualizuje hodnotu platu přímo ve `filters`
+      salary: newSalary,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Filters applied:", filters); // ✅ Debugging
+    console.log("Filters applied:", filters);
     onApply(filters);
   };
 
-  // ✅ Použití `Intl.NumberFormat` pro správné formátování částky v CZK
   const formattedSalary = useMemo(
     () =>
       new Intl.NumberFormat("cs-CZ", {
@@ -152,7 +151,7 @@ export default function Filter({ onApply }) {
                 border: "1px solid #ccc",
                 borderRadius: "15px",
                 backgroundColor: filters.jobContract.includes(jobContract)
-                  ? "#007BFF"
+                  ? "rgb(193, 127, 204)"
                   : "#fff",
                 color: filters.jobContract.includes(jobContract)
                   ? "#fff"

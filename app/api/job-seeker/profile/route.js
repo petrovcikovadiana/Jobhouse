@@ -10,7 +10,7 @@ export async function GET(req) {
     );
   }
 
-  // Ověření, zda uživatel existuje
+  // validate if user exist or not
   const profile = db
     .prepare(
       `
@@ -28,7 +28,7 @@ export async function GET(req) {
     });
   }
 
-  // 🔹 Opravené načítání přihlášek
+  // load applies
   const applications = db
     .prepare(
       `
@@ -40,7 +40,7 @@ export async function GET(req) {
     )
     .all(userId);
 
-  console.log("Applications found:", applications); // ✅ Debugging
+  console.log("Applications found:", applications);
 
   return new Response(JSON.stringify({ profile, applications }), {
     status: 200,

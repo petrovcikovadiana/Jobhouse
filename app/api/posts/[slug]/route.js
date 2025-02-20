@@ -4,7 +4,7 @@ export async function GET(req, context) {
   const params = await context.params;
   const { slug } = params;
 
-  // Získání detailu příspěvku
+  // getting detail of post
   const post = db
     .prepare(
       `
@@ -36,7 +36,7 @@ export async function GET(req, context) {
   post.benefits = safeParse(post.benefits);
   post.languages = safeParse(post.languages);
 
-  // Získání uchazečů, kteří se přihlásili na tuto nabídku
+  // getting job seekers applies
   const applicants = db
     .prepare(
       `
@@ -49,7 +49,7 @@ export async function GET(req, context) {
     )
     .all(slug);
 
-  // Ověření, zda aktuální uživatel už na tuto nabídku aplikoval
+  // validation, if logged user applied already
   const alreadyApplied =
     db
       .prepare(
