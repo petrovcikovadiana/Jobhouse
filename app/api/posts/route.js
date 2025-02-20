@@ -12,51 +12,45 @@ export async function POST(request) {
     technologies = [],
   } = body;
 
-  let whereClause = "1=1"; // Výchozí podmínka
+  let whereClause = "1=1"; 
   const params = [];
 
-  // Filtrování podle lokace
+  // filter by location
   if (location.length > 0) {
     const placeholders = location.map(() => "?").join(", ");
     whereClause += ` AND location IN (${placeholders})`;
     params.push(...location);
   }
 
-  // Filtrování podle platu
   if (salary) {
     whereClause += " AND salary >= ?";
     params.push(salary);
   }
 
-  // Filtrování podle typu smlouvy
   if (jobContract.length > 0) {
     const placeholders = jobContract.map(() => "?").join(", ");
     whereClause += ` AND job_contract IN (${placeholders})`;
     params.push(...jobContract);
   }
 
-  // Filtrování podle seniority
   if (seniority.length > 0) {
     const placeholders = seniority.map(() => "?").join(", ");
     whereClause += ` AND seniority IN (${placeholders})`;
     params.push(...seniority);
   }
 
-  // Filtrování podle oboru
   if (field.length > 0) {
     const placeholders = field.map(() => "?").join(", ");
     whereClause += ` AND field IN (${placeholders})`;
     params.push(...field);
   }
 
-  // ✅ Filtr podle jazyků
   if (languages.length > 0) {
     const placeholders = languages.map(() => "?").join(", ");
     whereClause += ` AND languages LIKE '%' || ? || '%'`;
     params.push(...languages);
   }
 
-  // ✅ Filtr podle technologie
   if (technologies.length > 0) {
     const placeholders = technologies.map(() => "?").join(", ");
     whereClause += ` AND technologies LIKE '%' || ? || '%'`;

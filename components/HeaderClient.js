@@ -11,7 +11,7 @@ export default function HeaderClient() {
   const router = useRouter();
 
   useEffect(() => {
-    fetchUser(); // 🟢 Po načtení stránky načte uživatele
+    fetchUser();
   }, []);
 
   const handleLogout = async () => {
@@ -19,13 +19,12 @@ export default function HeaderClient() {
 
     if (response.ok) {
       setUser(null);
-      router.refresh(); // 🔄 Okamžitý rerender stránky
+      router.refresh();
     } else {
       console.error("Failed to logout");
     }
   };
 
-  // 🟢 Nevykreslovat hlavičku, dokud se neověří uživatel
   if (loading) return null;
 
   return (

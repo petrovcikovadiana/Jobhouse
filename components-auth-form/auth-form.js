@@ -37,7 +37,6 @@ export default function AuthForm({ mode }) {
         <img src="/images/lock.webp" alt="A lock icon" />
       </div>
 
-      {/* Name only in signup */}
       {mode === "signup" && (
         <p>
           <label htmlFor="name">Full Name</label>
@@ -48,7 +47,6 @@ export default function AuthForm({ mode }) {
         <label htmlFor="email">Email</label>
         <input type="email" name="email" id="email" required />
       </p>
-      {/* Role only in signup */}
       {mode === "signup" && (
         <p>
           <label htmlFor="role">Register as:</label>

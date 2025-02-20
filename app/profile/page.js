@@ -24,7 +24,6 @@ export default function JobSeekerProfilePage() {
         });
 
         const data = await response.json();
-        console.log("✅ API Response:", data);
 
         if (response.ok) {
           setProfile(data.profile);
@@ -39,9 +38,6 @@ export default function JobSeekerProfilePage() {
 
     fetchProfile();
   }, [user]);
-  console.log("🟢 Current user:", user);
-  console.log("🟢 Current profile:", profile);
-  console.log("🟢 Current applications:", applications);
 
   useEffect(() => {
     router.refresh();

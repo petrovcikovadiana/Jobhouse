@@ -44,7 +44,7 @@ export default function PostDetailPage() {
   };
 
   const confirmApply = async () => {
-    setShowModal(false); // Zavřít první modal
+    setShowModal(false);
 
     const response = await fetch("/api/apply", {
       method: "POST",
@@ -57,7 +57,7 @@ export default function PostDetailPage() {
 
     if (response.ok) {
       setApplied(true);
-      setShowSuccessModal(true); // ✅ Otevřít úspěšný modal
+      setShowSuccessModal(true);
       router.refresh();
     } else {
       const errorData = await response.json();
@@ -191,7 +191,7 @@ export default function PostDetailPage() {
         )}
       </div>
 
-      {/* První modal - potvrzení žádosti */}
+      {/* first modal - confirm your application */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
@@ -212,7 +212,7 @@ export default function PostDetailPage() {
         </div>
       )}
 
-      {/* Druhý modal - úspěšné odeslání */}
+      {/* second modal - success sending */}
       {showSuccessModal && (
         <div className="modal-overlay">
           <div className="modal">
@@ -228,7 +228,6 @@ export default function PostDetailPage() {
         </div>
       )}
 
-      {/* ✅ Sidebar */}
       <div className="detail-sidebar">
         <img className="detail-img" src={post.image_url} alt={post.title} />
         <p className="post-company">
@@ -272,23 +271,6 @@ export default function PostDetailPage() {
               <span>Not specified</span>
             )}
           </div>
-
-          {/* <div className="sidebar-layout">
-            <span className="sidebar-header">Location</span>
-            <button className="sidebar-btn"></button>
-          </div>
-          <div className="sidebar-layout">
-            <span className="sidebar-header">Salary</span>{" "}
-            <button className="sidebar-btn"> </button>
-          </div>
-          <div className="sidebar-layout">
-            <span className="sidebar-header">Job Contract</span>{" "}
-            <button className="sidebar-btn"> </button>
-          </div>
-          <div className="sidebar-layout">
-            <span className="sidebar-header">Seniority</span>
-            <button className="sidebar-btn"></button>
-          </div> */}
         </div>
       </div>
     </article>

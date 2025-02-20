@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { verifyAuth } from "@/lib/auth";
 
 export async function createPost(formData) {
-  // Získání aktuálního uživatele
+  // get actual user
   const { user } = await verifyAuth();
 
   if (!user) {
@@ -30,7 +30,7 @@ export async function createPost(formData) {
   const benefits = formData.get("benefits");
   const errors = [];
 
-  // Validace vstupů
+  // validation
   if (!title || title.trim().length === 0) {
     errors.push("Title is required.");
   }
@@ -81,7 +81,7 @@ export async function createPost(formData) {
   }
 
   if (errors.length > 0) {
-    return { errors }; // Vrácení chyb zpět klientské části
+    return { errors };
   }
 
   let imageUrl;
@@ -94,7 +94,7 @@ export async function createPost(formData) {
   }
 
   await storePost({
-    imageUrl: imageUrl, // Implementujte logiku ukládání URL obrázku
+    imageUrl: imageUrl,
     title,
     content,
     userId: user.id,
@@ -111,5 +111,5 @@ export async function createPost(formData) {
     benefits,
   });
   revalidatePath("/", "layout");
-  redirect("/feed"); // Přesměrování po úspěšném vytvoření příspěvku
+  redirect("/feed");
 }

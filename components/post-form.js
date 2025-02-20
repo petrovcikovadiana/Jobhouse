@@ -4,8 +4,8 @@ import { useState } from "react";
 import FormSubmit from "@/components/form-submit";
 
 export default function PostForm({ action }) {
-  const [errors, setErrors] = useState([]); // Uchování chyb
-  const [requirements, setRequirements] = useState([""]); // Počáteční požadavek
+  const [errors, setErrors] = useState([]);
+  const [requirements, setRequirements] = useState([""]);
   const [skills, setSkills] = useState([""]);
   const [benefits, setBenefits] = useState([""]);
   const [technologies, setTechnologies] = useState([""]);
@@ -15,18 +15,17 @@ export default function PostForm({ action }) {
     e.preventDefault();
     const formData = new FormData(e.target);
 
-    // ✅ Přidání dynamických polí do FormData
+    // ✅ add dynamic arrays do FormData
     formData.append("requirements", JSON.stringify(requirements));
     formData.append("skills", JSON.stringify(skills));
     formData.append("benefits", JSON.stringify(benefits));
     formData.append("technologies", JSON.stringify(technologies));
     formData.append("languages", JSON.stringify(selectedLanguages));
 
-    // Zavolání serverové akce a zpracování výsledku
     const result = await action(formData);
 
     if (result && result.errors) {
-      setErrors(result.errors); // Nastavení chyb
+      setErrors(result.errors); 
     }
   };
   const addRequirement = () => setRequirements([...requirements, ""]);
@@ -49,7 +48,7 @@ export default function PostForm({ action }) {
     setTechnologies(technologies.filter((_, i) => i !== index));
   };
 
-  // Funkce pro přidání nového pole pro dovednosti
+ 
   const addSkill = () => setSkills([...skills, ""]);
   const updateSkill = (index, value) => {
     const updated = [...skills];
@@ -60,7 +59,6 @@ export default function PostForm({ action }) {
     setSkills(skills.filter((_, i) => i !== index));
   };
 
-  // Funkce pro přidání nového pole pro dovednosti
   const addBenefit = () => setBenefits([...benefits, ""]);
   const updateBenefit = (index, value) => {
     const updated = [...benefits];
@@ -270,7 +268,6 @@ export default function PostForm({ action }) {
         <div className="form-actions">
           <FormSubmit />
         </div>
-        {/* Zobrazení chyb */}
         {errors.length > 0 && (
           <ul className="form-errors">
             {errors.map((error, index) => (

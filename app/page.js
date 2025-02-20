@@ -47,13 +47,11 @@ export default function Home() {
     <>
       <div className="home-layout">
         {" "}
-        {/* Komponenta pro filtrování */}
         <div className="filters">
           {" "}
           <Filter onApply={fetchFilteredPosts} />
         </div>
         <div className="posts">
-          {/* Zobrazení příspěvků */}
           {filteredPosts.length > 0 ? (
             <Posts posts={filteredPosts} />
           ) : (
